@@ -1,0 +1,107 @@
+---
+title: "Decision Theory Assignment 1"
+author: "Omkar Bhutra (omkbh878)"
+date: "2 November 2019"
+output:
+  pdf_document: default
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(tinytex.verbose = TRUE)
+```
+
+#Assignment 1:
+##1
+###a
+Using Likihood as a measure of how likely is an event is a matter of inference to the best explanation.
+Inference to the best explanation:
+$$P(B|\overline{A},I) = 0.1%$$
+$P(B|A_1,I) = 2%$
+$P(B|A_2,I) = 10%$
+$P(B|A_3,I) = 20%$
+
+$P(B|A_1,I) > P(B|A_j,I)$
+Then $A_1$ is considered bset explanation for B and is provisionally accepted
+Hence,
+GP's diagnosis using the principles of inference to the best explanation is that disease $A_1$ explains the Symptoms.
+
+##1
+###b
+####i
+$P(A_1) = 0.2%$ 
+$P(\overline A_1) = 99.8%$
+$P(A_2) = 0.3%$ 
+$P(\overline A_2) = 99.7%$
+$P(A_3) = 1%$
+$P(\overline A_3) = 99%$
+$P(B|A_1,I) = 2%$ 
+$P(B|\overline A_1,I) = 98%$
+$P(B|A_2,I) = 10%$
+$P(B|\overline A_2,I) = 90%$
+$P(B|A_3,I) = 20%$
+$P(B|\overline A_3,I) = 80%$
+
+Conditional probabilities:
+$P(A|B) = \frac{P(B|A).P(A)}{P(B|A).P(A)+P(B|\overline A).P(\overline A)}$
+(i) $ \frac{0.02X0.002}{0.02X0.002+0.98X0.998} = 97.8%$
+(ii) $ \frac{0.1X0.003}{0.1X0.003+0.9X0.997} = 89.1%$
+(iii) $ \frac{0.2X0.01}{0.2X0.01+0.8X0.99} = 79.2%$
+
+####ii
+Since, $P(A_1|B) > P(A_j|B)$
+Then $A_1$ is considered bset explanation for the symptopms and is provisionally accepted.
+
+##2
+### i
+Posterior probability model for Binomial sampling:
+The sample size n could be fixed, in which case $\tilde r$ is a random variable and the distribution of $\tilde r$ given p and n is a binomial distribution.
+
+$P(p| n, r) \propto \left[\begin{array}{cc} n \\r \end{array}\right] p^r(1-p)^{n-r} P(p)$
+
+For Pascal sampling,
+the number of successes r could be fixed (sample until r successes are obtained), in which case $\tilde n$ is a random variable and the distribution of $\tilde n$ given p and r is a Pascal distribution, which is of the following form:
+
+$$
+P(p| n, r) \propto \left(\begin{array}{cc} 
+n-1 \\
+r-1
+\end{array}\right)
+p^r(1-p)^{n-r}.P(p)
+$$ 
+
+These two distributions differ only in the first terms, the combinatorial terms. The reason for this is that the last trial must be a success in Pascal sampling. In the posterior, The combinatorial terms are irrelevant since they do not involve $\tilde p$. The combinatorial term can be moved outside the integral where it appears in both the numerator and denominator and can be cancelled out.
+Therefore, the liklihood function fot the Bernoulli process can be taken equal to $p^r(1-p)^{n-r}$ so that it isnt necessary to know whether the sampling is done with n fixed or with r fixed.
+
+Consider the equation:
+
+$$f(\theta|y) = \frac{f(y|\theta)f(\theta)}{\left\int_{-\infty}^{\infty} f(y|\theta)f(\theta) \; d\theta\right}$$
+
+$$f''(p|y) = \frac{f'(p)f(y|p)}{\int_{0}^{1}f'(p)f(y|p)dp} = \frac{f'(p)P(r|n,p)}{\int_{0}^{1}f'(p)P(r|n,p)dp}$$
+
+$$= \frac{\frac{(n'-1)!}{(r'-1)!(n'-r'-1)!}p^{r'-1}(1-p)^{n'-r'-1}\left(\begin{array}{cc} 
+n \\
+r 
+\end{array}\right)p^r(1-p^{n-r})}
+{\int_{0}^{1}\frac{(n'-1)!}{(r'-1)!(n'-r'-1)!}p^{r'-1}(1-p)^{n'-r'-1}\left(\begin{array}{cc} 
+n \\
+r 
+\end{array}\right)p^r(1-p^{n-r})dp}$$
+
+The terms not involving p can be moved outside the integral
+
+$$f''(p|y) = \frac{p^{r'-1}(1-p)^{n'-r'-1}p^r(1-p)^{n-r}}{\int_{0}^{1}p^{r'-1}(1-p)^{n'-r'-1}p^r(1-p)^{n-r}dp}$$
+
+$$f''(p|y) = \frac{1}{k}p^{r'+r-1}(1-p)^{n'+n-r'-r-1}$$
+
+$$n''=n'+n ;  r''=r'+r$$
+
+$$f''(p|y) = \frac{1}{k}p^{r''-1}(1-p)^{n''-r''-1}$$
+
+$$k = \frac{(r''-1)!(n''-r''-1)!}{(n''-1)!}$$
+Either case, the term cancels out so the final result is the same
+
+### ii
+To determine the posterior distribution, the only information needed about the sample consists of the values of the sample statistics, r and n. Hence, r and n are sufficient statistics. The procedure is used to tell statisticians when to stop sampling is called the stopping rule, if the stopping rule has no effect on the posterior distribution, then it is said to be non-informative. The two stopping rules are: (sample until n trails and sample until r successes ) are both non-informative.
+

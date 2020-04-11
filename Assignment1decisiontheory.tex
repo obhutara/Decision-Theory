@@ -1,0 +1,281 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Assignment 1 Decision thoery},
+            pdfauthor={Omkar Bhutra (omkbh878)},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\providecommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Assignment 1 Decision thoery}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Omkar Bhutra (omkbh878)}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{11 January 2020}
+
+
+\begin{document}
+\maketitle
+
+\section{Assignment 1:}\label{assignment-1}
+
+\subsubsection{1a}\label{a}
+
+Using Likihood as a measure of how likely is an event is a matter of
+inference to the best explanation. Inference to the best explanation:
+\(P(B|\overline{A},I) = 0.1%\) \(P(B|A_1,I) = 2%\) \(P(B|A_2,I) = 10%\)
+\(P(B|A_3,I) = 20%\)
+
+\(P(B|A_1,I) > P(B|A_j,I)\) Then \(A_1\) is considered bset explanation
+for B and is provisionally accepted Hence, GP's diagnosis using the
+principles of inference to the best explanation is that disease \(A_1\)
+explains the Symptoms.
+
+\subsubsection{1b-i}\label{b-i}
+
+\(P(A_1) = 0.2%\) \(P(\overline A_1) = 99.8%\) \(P(A_2) = 0.3%\)
+\(P(\overline A_2) = 99.7%\) \(P(A_3) = 1%\) \(P(\overline A_3) = 99%\)
+\(P(B|A_1,I) = 2%\) \(P(B|\overline A_1,I) = 98%\) \(P(B|A_2,I) = 10%\)
+\(P(B|\overline A_2,I) = 90%\) \(P(B|A_3,I) = 20%\)
+\(P(B|\overline A_3,I) = 80%\)
+
+Conditional probabilities:
+\(P(A|B) = \frac{P(B|A).P(A)}{P(B|A).P(A)+P(B|\overline A).P(\overline A)}\)
+
+\(\frac{0.02X0.002}{0.02X0.002+0.98X0.998}\) = 97.8\%
+
+\(\frac{0.1X0.003}{0.1X0.003+0.9X0.997}\) = 89.1\%
+
+\(\frac{0.2X0.01}{0.2X0.01+0.8X0.99}\) = 79.2\%
+
+\subsubsection{1b-ii}\label{b-ii}
+
+Since, \(P(A_1|B) > P(A_j|B)\) Then \(A_1\) is considered bset
+explanation for the symptopms and is provisionally accepted.
+
+\subsubsection{2-i}\label{i}
+
+Posterior probability model for Binomial sampling: The sample size n
+could be fixed, in which case \(\tilde r\) is a random variable and the
+distribution of \(\tilde r\) given p and n is a binomial distribution.
+
+\(P(p| n, r) \propto \left[\begin{array}{cc} n \\r \end{array}\right] p^r(1-p)^{n-r} P(p)\)
+
+For Pascal sampling, the number of successes r could be fixed (sample
+until r successes are obtained), in which case \(\tilde n\) is a random
+variable and the distribution of \(\tilde n\) given p and r is a Pascal
+distribution, which is of the following form: \[
+P(p| n, r) \propto \left(\begin{array}{cc} 
+n-1 \\
+r-1
+\end{array}\right)
+p^r(1-p)^{n-r}.P(p)
+\]
+
+These two distributions differ only in the first terms, the
+combinatorial terms. The reason for this is that the last trial must be
+a success in Pascal sampling. In the posterior, The combinatorial terms
+are irrelevant since they do not involve \(\tilde p\). The combinatorial
+term can be moved outside the integral where it appears in both the
+numerator and denominator and can be cancelled out. Therefore, the
+liklihood function fot the Bernoulli process can be taken equal to
+\(p^r(1-p)^{n-r}\) so that it isnt necessary to know whether the
+sampling is done with n fixed or with r fixed.
+
+\[f''(p|y) = \frac{f'(p)f(y|p)}{\int_{0}^{1}f'(p)f(y|p)dp} = \frac{f'(p)P(r|n,p)}{\int_{0}^{1}f'(p)P(r|n,p)dp} \]
+
+\[= \frac{\frac{(n'-1)!}{(r'-1)!(n'-r'-1)!}p^{r'-1}(1-p)^{n'-r'-1}\left(\begin{array}{cc} 
+n \\
+r 
+\end{array}\right)p^r(1-p^{n-r})}
+{\int_{0}^{1}\frac{(n'-1)!}{(r'-1)!(n'-r'-1)!}p^{r'-1}(1-p)^{n'-r'-1}\left(\begin{array}{cc} 
+n \\
+r 
+\end{array}\right)p^r(1-p^{n-r})dp}\]
+
+The terms not involving p can be moved outside the integral
+
+\[f''(p|y) = \frac{p^{r'-1}(1-p)^{n'-r'-1}p^r(1-p)^{n-r}}{\int_{0}^{1}p^{r'-1}(1-p)^{n'-r'-1}p^r(1-p)^{n-r}dp}\]
+
+\[f''(p|y) = \frac{1}{k}p^{r''-1}(1-p)^{n''-r''-1}\]
+
+\[k = \frac{(r''-1)!(n''-r''-1)!}{(n''-1)!}\] Either case, the term
+cancels out so the final result is the same
+
+\subsubsection{2-ii}\label{ii}
+
+To determine the posterior distribution, the only information needed
+about the sample consists of the values of the sample statistics, r and
+n. Hence, r and n are sufficient statistics. The procedure is used to
+tell statisticians when to stop sampling is called the stopping rule, if
+the stopping rule has no effect on the posterior distribution, then it
+is said to be non-informative. The two stopping rules are: (sample until
+n trails and sample until r successes ) are both non-informative.
+
+\subsubsection{3}\label{section}
+
+Prior probabilities: \[
+P(30) = P(40) = P(50)
+\]
+
+Liklihoods: \[
+L(\lambda = 30,r=380,t=2)
+= \frac{(\lambda.t)^r.e^{-\lambda.t}}{r!}
+=\frac{(30.2)^{380}e^{-30.2}}{380!}
+=L(\lambda = 50,r=380,t=2)
+= \frac{(50.2)^{380}e^{-50.2}}{380!}
+= x
+\]
+
+Therefore, \[
+L(\lambda = 40,r=380,t=2)= \frac{(40.2)^{380}e^{-40.2}}{380!} = 2x
+\]
+
+Posterior probabilties: \[
+P(\lambda|r=380,t=2)=\frac{\frac{(2\lambda)^{380}e^{-2\lambda}}{380!}.P(\lambda)}{\sum(LiklihoodsXP(\lambda))}
+\] The \(\lambda^r\) terms cancel out
+
+\[
+P(\lambda=30|r=380,t=2) = \frac{(30^{380}e^{-30.2})\frac{1}{3}}{(30^{380}e^{-30.2}.\frac{1}{3})
++(40^{380}e^{-40.2}.\frac{1}{3})
++(50^{380}e^{-50.2}.\frac{1}{3})}
+= \frac{x}{x+2x+x} = 0.25
+\] \[
+P(\lambda=40|r=380,t=2) = \frac{(40^{380}e^{-40.2})\frac{1}{3}}{(30^{380}e^{-30.2}.\frac{1}{3})
++(40^{380}e^{-40.2}.\frac{1}{3})
++(50^{380}e^{-50.2}.\frac{1}{3})}
+= \frac{2x}{x+2x+x} = 0.5
+\] \[
+P(\lambda=50|r=380,t=2) = \frac{(50^{380}e^{-50.2})\frac{1}{3}}{(30^{380}e^{-30.2}.\frac{1}{3})
++(40^{380}e^{-40.2}.\frac{1}{3})
++(50^{380}e^{-50.2}.\frac{1}{3})}
+= \frac{x}{x+2x+x} = 0.25
+\]
+
+\subsubsection{4-i}\label{i-1}
+
+A family of probability distributions belongs to the k-parameter
+exponential class of distributions if the probability density can be
+written as: \[
+f(x|\theta) = e^{\sum_{j=1}^kA_j(\theta)B_j(x)+C(x)+D(\theta)} \\
+where:\\
+\theta = (\theta_1,...,\theta_k) \\
+A_1(\theta),...,A_k(\theta) \\
+\] and \(D(\theta)\) are functions of the parameter \(\theta\) only (and
+not of x) \(B_1(\theta),...,B_k(\theta)\) and \(C(x)\) are functions of
+x only (and not of \(\theta\))
+
+Two parameter Beta distribution , shape parameterisation: \[
+f(x|\theta) = f(x|\alpha,\beta) = \frac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha,\beta)} \\
+f(x|\theta) = f(x|\alpha,\beta) = \frac{x^{\alpha-1}(1-x)^{\beta-1}{\gamma(\alpha+\beta)}}{{\gamma(\alpha)\gamma(\beta)}} \\
+where: \\
+B(\alpha,\beta) = \frac{\gamma(\alpha)\gamma(\beta)}{\gamma(\alpha+\beta)} \\
+= e^{(\alpha-1)(ln(x))+(\beta-1)ln(1-x)+ln(\gamma(\alpha+\beta))-ln(\gamma(\alpha)-ln(\gamma(\beta)}
+\] Parametric form: \[
+A_1(\theta) = \alpha-1 \\
+B_1(x) = ln(x) \\
+A_2(\theta) = \beta-1 \\
+B_2(x) = ln(1-x) \\
+C(x) = 0 \\
+D(\theta) = ln(\gamma(\alpha+\beta))-ln(\gamma(\alpha)-ln(\gamma(\beta)
+\] When the sample distribution is Binomial such as
+\(X \sim Bin(n,\pi)\) then, The Conjugate Prior is a Beta distribution
+\(\pi \sim \beta(\alpha,\beta)\) and the posterior is also a Beta
+distribution such as \(\pi|x \sim Beta(\alpha+x,\beta+n-x)\)
+
+pdf of sample point distribution: \[
+f(x|\theta) = e^{\sum_{j=1}^kA_j(\theta)B_j(x)+C(x)+D(\theta)}
+\] liklihood: \[
+\prod_{i=1}^nf(x_i|\theta) = \prod_{i=1}^ne^{A_j(\theta)B_j(x_i)+C(x_i)+D(\theta)} \\
+= e^{\sum_{i=1}^n(\sum_{j=1}^kA_j(\theta)B_j(x_i)+C(x_i)+D(\theta))} \\
+= e^{\sum_{j=1}^kA_j(\theta)\sum_{i=1}^nB_j(x_i)+\sum_{i=1}^nC(x_i)+n.D(\theta)}
+\] prior density: \[
+p(\theta|\alpha_1,...,\alpha_k,\alpha_{k+1})\\ = e^{\sum_{j=1}^kA_j(\theta).\alpha_j+\alpha_{k+1}.D(\theta)+K(\alpha_1,...,\alpha_k,\alpha_{k+1})} \\
+\propto e^{\sum_{j=1}^kA_j(\theta).\alpha_j+\alpha_{k+1}.D(\theta)}
+\]
+
+\subsubsection{4-ii}\label{ii-1}
+
+posterior distribution: \[
+q(\theta|x,\alpha_1,...,\alpha_k,\alpha_{k+1}) \\
+= q(\theta|x_1,..,x_n;,\alpha_1,...,\alpha_k,\alpha_{k+1}) \\
+\propto \prod_{i=1}^nf(x_i|\theta).p(\theta|\alpha_1,...,\alpha_k,\alpha_{k+1}) \\
+= e^{\sum_{j=1}^kA_j(\theta)\sum_{i=1}^nB_j(x_i)+\sum_{i=1}^nC(x_i)+n.D(\theta)}.e^{\sum_{j=1}^kA_j(\theta).\alpha_j+\alpha_{k+1}.D(\theta)+K(\alpha_1,..,\alpha_k,\alpha_{k+1})} \\
+\propto e^{\sum_{j=1}^kA_j(\theta)(\sum_{i=1}^nB_j(x_i)+\alpha_j)+(n+\alpha_{k+1})D(\theta)}
+\] posterior distribution hyperparameters: \[
+\alpha_1 + \sum_{i=1}^nB_1(x_i),...,\alpha_k + \sum_{i=1}^nB_k(x_i),\alpha_{k+1}+n
+\]
+
+
+\end{document}

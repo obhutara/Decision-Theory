@@ -1,0 +1,486 @@
+---
+title: "Decision Theory Assignment 2"
+author: "Omkar Bhutra (omkbh878)"
+date: "10 January 2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(tinytex.verbose = TRUE)
+library("kableExtra")
+library("dplyr")
+```
+
+
+#Assignment 2:
+###1. 
+(This is to some parts Exercises 12,13 and 14 in Chapter 5 of "Winkler: An Introduction to Bayesian inference and decision, 2nd ed.")
+One nonprobabilistic decision-making criterion involves the consideration of a weighted average of the highest and lowest payoffs for each action. The weights, which must sum to 1, can be thought of as an optimism-pessimism index. The action with the highest weighted average of the highest and lowest payoffs is the action chosen by this criterion.
+
+###1a
+Comment on this decision-making criterion and use it for payoff table (i) below with the highest payoff in each row receiving a weight of 0.4 and the lowest payoff receiving a weight of 0.6.
+Payoff table:
+
+```{r 1a, message=FALSE,error=FALSE,warning=FALSE,echo=FALSE}
+action1 = c(-50,80,20,100,0)
+action2 = c(30,40,70,20,50)
+action3 = c(10,30,-30,10,40)
+action4 = c(-10,-50,-70,-20,200)
+wt_avg1 = c((max(action1)*0.4)+(min(action1)*0.6))
+wt_avg2 = c((max(action2)*0.4)+(min(action2)*0.6))
+wt_avg3 = c((max(action3)*0.4)+(min(action3)*0.6))
+wt_avg4 = c((max(action4)*0.4)+(min(action4)*0.6))
+q1data <- data.frame(
+   Action = c(1:4),
+   A = c(-50,30,10,-10),
+   B = c(80,40,30,-50),
+   C = c(20,70,-30,-70),
+   D = c(100,20,10,-20),
+   E = c(0,50,40,200),
+   Weighted_avg = c(wt_avg1,wt_avg2,wt_avg3,wt_avg4)
+)
+kable(q1data, caption = "Payoff table,(Action X State of the World)")
+```
+$$Weighted Average = {(Highest payoff X 0.4)(Lowest Payoff X 0.6)} $$
+$$Weighted Average 1 = {(100 X 0.4)(-50 X 0.6)} = 10 $$
+$$Weighted Average 2 = {(70 X 0.4)(20 X 0.6)} = 40 $$
+$$Weighted Average 3 = {(40 X 0.4)(-30 X 0.6)} = -2$$
+
+$$Weighted Average 4 = {(200 X 0.4)(-70 X 0.6)} =38 $$
+
+The Weighted_avg column is calculated using the above formula using the optimism-pessimism rule where the best case andthe worst case are considered and all the outcomes in between are ignored to make a decision to perform an action.
+
+```{r 1a1, message=FALSE,error=FALSE,warning=FALSE,echo=FALSE}
+print("The highest weighted avg is")
+paste(max(q1data$Weighted_avg))
+print("The best action chosen is 2")
+```
+
+###1b
+Use the decision-making criterion described above for payoff table (ii) below, with the highest payoff in each row receiving a weight of 0.8 and the lowest payoff receiving a weight of 0.2. For payoff table (ii) the ER criterion would also involve a weighted average of the two payoffs in each row. Compare the criterion described above with the ER criterion.
+
+```{r 1b, message=FALSE,error=FALSE,warning=FALSE,echo=FALSE}
+action1 = c(10,4)
+action2 = c(7,9)
+
+wt_avg1 = c((max(action1)*0.8)+(min(action1)*0.2))
+wt_avg2 = c((max(action2)*0.8)+(min(action2)*0.2))
+
+q2data <- data.frame(
+   Action = c(1:2),
+   A = c(10,7),
+   B = c(4,9),
+   Weighted_avg = c(wt_avg1,wt_avg2)
+)
+kable(q2data, caption = "Payoff table,(Action X State of the World)")
+```
+
+Using the Weighted average criterion:
+$$Weighted Average = {(Highest payoff X 0.8)(Lowest Payoff X 0.2)} $$
+$$Weighted Average 1 = {(10 X 0.8)(4 X 0.2)} = 8.8 $$
+$$Weighted Average 2 = {(7 X 0.8)(9 X 0.2)} = 8.6 $$
+
+```{r 1b1, message=FALSE,error=FALSE,warning=FALSE,echo=FALSE}
+print("The highest weighted avg is")
+paste(max(q2data$Weighted_avg))
+print("The best action chosen is 1")
+```
+
+Using the ER criterion vs Weighted average criterion:
+The probability of each state is multiplied with the payoff of each action to find the expected payoff whereas in the latter, the weights formed from best case to worst case are multiplied withe the payoffs.
+
+###1c
+Consider payoff table (i) above. Assume the utility function of a person is
+U(R) = log(R+71), where R is the payoff (and log is the natural logarithm with base e). Moreover, assume that person’s prior probabilities for the five states of nature are
+P(A) = 0.10; P(B) = 0.20; P(C) = 0.25; P(D) = 0.10 and P(E) = 0.35. Find the optimal action for this person according to the EU criterion.
+
+The Utility matrix can be calculated using the data above. where R is taken from payoff matrix 1.
+```{r 1c, message=FALSE,error=FALSE,warning=FALSE,echo=FALSE}
+
+#U_R = log(R+71)
+q3data <- data.frame(
+   Action = c(1:4),
+   A = round(c(log(q1data$A+71)),3),
+   B = round(c(log(q1data$B+71)),3),
+   C = round(c(log(q1data$C+71)),3),
+   D = round(c(log(q1data$D+71)),3),
+   E = round(c(log(q1data$E+71)),3)
+)
+kable(q3data, caption = "Utility table,(Action X State of the World)")
+```
+P.A = 0.10; P.B = 0.20; P.C = 0.25; P.D = 0.10 ; P.E = 0.35
+EU-criterion:
+
+$$EU(action) = {\sum(UtilityXP(action))}$$
+$$EU(action 1) = {(3.045 X 0.1)+(5.017 X 0.2)+(4.511 X 0.25)+(5.142 X 0.1)+(4.262 X 0.35)} = 4.441 $$
+$$EU(action 2) = {(4.615 X 0.1)+(4.710 X 0.2)+(4.949 X 0.25)+(4.511 X 0.1)+(4.796 X 0.35)} = 4.77 $$
+$$EU(action 3) = {(4.394 X 0.1)+(4.615 X 0.2)+(3.714 X 0.25)+(4.394 X 0.1)+(4.710 X 0.35)} = 4.379 $$
+$$EU(action 4) = {(4.111 X 0.1)+(3.045 X 0.2)+(0 X 0.25)+(3.932 X 0.1)+(5.602 X 0.35)} = 3.374  $$
+The highest expected utility is achieved with action 2 and hence that is chosen.
+
+###2.
+Consider a big box filled with an enormous amount of poker chips. You know that either
+70% of the chips are red and the remainder blue, or 70% are blue and the remainder red.
+You must guess whether the big box has 70% red / 30% blue or 70% blue / 30% red. If
+you guess correctly, you win 5 USD. If you guess incorrectly, you lose 3 USD. Your prior
+probability that the big box contains 70% red / 30% blue is 0.40, and you are risk neutral
+in your decision making (i.e. your utility is linear in money).
+
+a) If you could purchase sample information in the form of one draw of a chip from the
+big box, how much should you be willing to pay for it?
+Assume now that the cost of sampling is US$0.25 (i.e. 25 US cents) per draw.
+
+The states are :$\theta_1$ = 70% red and 30% blue , $\theta_2$ = 70% blue and 30% red.
+The probabilities are:$P(\theta_1)$ = 0.4 , $P(\theta_2)$ = 0.6
+
+```{r 2a, message=FALSE,error=FALSE,warning=FALSE,echo=FALSE}
+P1 = 0.40; P2 = 0.60;
+q2adata <- data.frame(
+   Action = c("70R,30B","70B,30R"),
+   A = c(5,-3),
+   B = c(-3,5)
+)
+kable(q2adata, caption = "Payoff matrix ,(Action X State of the World)")
+```
+
+Value of sample information (VSI) :
+$VSI(y) = E''R(a'')-E''R(a')\\$
+$E'R(a_1)= 5(.4)+((-3)(.6)) = 0.2\\$
+$E'R(a_2)= -3(.4)+5(.6) = 1.8\\$
+
+Optimal prior action is $a_2$ that is guessing 70%Blue and 30% Red.
+Posterior Probability of the states:
+$P(\theta|Red) = \frac{P(Red|\theta)P(\theta)}{P(Red)}\\$
+
+$P(R) = 0.7(0.4)+0.3(0.6) = 0.28 + 0.18 = 0.46\\$
+$P(\theta_1|R) = \frac{0.7(0.4)}{0.46} = 0.61\\$
+$P(\theta_2|R) = 1- 0.61 = 0.39\\$
+
+$E'R(a_1)= 5(.61)+((-3)(.39)) = 1.88\\$
+$E'R(a_2)= -3(.61)+5(.39) = 0.12\\$
+
+Optimal prior action (a') for drawing a red poker chip is $a_1$ that is guessing 70% Red and 30% Blue.
+$VSI(Drawing Red Poker chip) = E''R(a'')-E''R(a') = 1.88-0.12 = 1.76\\$
+
+$P(\theta|Blue) = \frac{P(Blue|\theta)}{P(Blue)}\\$
+
+$P(B) = 0.7(0.6)+0.3(0.4) = 0.42 + 0.12 = 0.54\\$
+$P(\theta_1|R) = \frac{0.3(0.4)}{0.54} = 0.22\\$
+$P(\theta_2|R) = 1- 0.22 = 0.78\\$
+
+$E''R(a_1)= 5(.22)+((-3)(.78)) = -1.12\\$
+$E''R(a_2)= -3(.22)+5(.78) = 3.24\\$
+
+Optimal prior action (a') for drawing a blue poker chip is $a_2$ that is guessing 70% Blue and 30% Red.
+$VSI(Drawing Blue Poker chip) = E''R(a'')-E''R(a'') = 0\\$
+
+The Expected Value of Sample information (EVSI):
+$EVSI = VSI(Red).P(Red)+VSI(Blue).P(Blue) = 1.76(0.46)+0(0.54) = 0.81 USD\\$
+To purchase sample information, it would be alright to pay a sum of 0.81$.
+
+###2b)
+What is the ENGS for a sample of 10 chips using a single-stage sampling plan. Assume now that the cost of sampling is US$0.25 (i.e. 25 US cents) per draw 
+$ENGS(n=10) = EVSI(n=10)-CS(n=10)$
+
+```{r 2b, message=FALSE,error=FALSE,warning=FALSE}
+prob_red <- c()
+posterior_red <- c()
+vsi <- c()
+for(i in 0:10){
+  prob_red <- c(prob_red, (dbinom(i, 10, 0.7)*0.4) + (dbinom(i, 10, 0.3) * 0.6))
+  posterior_theta <- dbinom(i, 10, 0.7)
+  posterior_red <- c(posterior_red, (posterior_theta*0.4)/prob_red[i+1])
+}
+
+posteriors_blue <- 1 - posterior_red
+
+er1 <- 5*(posterior_red) - 3*(posteriors_blue)
+er2 <- -3*(posterior_red) + 5*(posteriors_blue)
+
+vsi <- c()
+for(i in 1:11){
+  if(er1[i] > er2[i]){
+    vsi <- c(vsi, er1[i] - er2[i])
+  }
+  else
+    vsi <- c(vsi, er2[i] - er2[i])
+}
+
+evsi <- sum(vsi*prob_red)
+
+print("posterior_red")
+posterior_red
+print("posterior_blue")
+posteriors_blue
+print("posterior_theta")
+posterior_theta
+print("expected payoff 1")
+er1
+print("expected payoff 2")
+er2
+print("value of sample information")
+vsi
+print("expected value of sample information")
+evsi
+cs <- 0.25*10
+engs <- evsi - cs
+print("expected net gain of sampling from the sequential sampling plan")
+engs
+```
+
+Posterior probabilities for $\theta_1$:
+$P(\theta_1|R,R,R,R,R,R,R,R,R,R) = 0.9996\\$
+$P(\theta_1|R,R,R,R,R,R,R,R,R,B) = 0.9982\\$
+$P(\theta_1|R,R,R,R,R,R,R,R,B,B) = 0.9907\\$
+$P(\theta_1|R,R,R,R,R,R,R,B,B,B) = 0.9518\\$
+$P(\theta_1|R,R,R,R,R,R,B,B,B,B) = 0.7840\\$
+$P(\theta_1|R,R,R,R,R,B,B,B,B,B) = 0.4000\\$
+$P(\theta_1|R,R,R,R,B,B,B,B,B,B) = 0.1090\\$
+$P(\theta_1|R,R,R,B,B,B,B,B,B,B) = 0.0219\\$
+$P(\theta_1|R,R,B,B,B,B,B,B,B,B) = 0.0041\\$
+$P(\theta_1|R,B,B,B,B,B,B,B,B,B) = 0.000758\\$
+$P(\theta_1|B,B,B,B,B,B,B,B,B,B) = 0.000139\\$
+
+Posterior probabilities for $\theta_2$:
+$P(\theta_1|R,R,R,R,R,R,R,R,R,R) = 0.000313\\$
+$P(\theta_1|R,R,R,R,R,R,R,R,R,B) = 0.00170\\$
+$P(\theta_1|R,R,R,R,R,R,R,R,B,B) = 0.0092\\$
+$P(\theta_1|R,R,R,R,R,R,R,B,B,B) = 0.04816\\$
+$P(\theta_1|R,R,R,R,R,R,B,B,B,B) = 0.2160\\$
+$P(\theta_1|R,R,R,R,R,B,B,B,B,B) = 0.600\\$
+$P(\theta_1|R,R,R,R,B,B,B,B,B,B) = 0.8909\\$
+$P(\theta_1|R,R,R,B,B,B,B,B,B,B) = 0.9780\\$
+$P(\theta_1|R,R,B,B,B,B,B,B,B,B) = 0.9958\\$
+$P(\theta_1|R,B,B,B,B,B,B,B,B,B) = 0.9992\\$
+$P(\theta_1|B,B,B,B,B,B,B,B,B,B) = 0.99986\\$
+
+Expected payoff is calculated using the optimal posterior
+$VSI(sample) = E''R(a'')-E''R(a')\\$
+$EVSI = \sum{VSI(sample).P(sample)}\\$
+$ = 7.994(0.113)+7.972(0.048)+7.852(0.094)+7.229(0.1121)+4.544(0.1021) = 2.491\\$
+$ENGS = 2.491 - 0.25(10) = -0.009\\$
+
+###2c
+Model this decision problem using an influence diagram showing the contents of the
+node tables.
+
+```{r 2c, message=FALSE,error=FALSE,warning=FALSE,echo=FALSE}
+knitr::include_graphics("C://Users//Omkar//Downloads//Decision Theory//2c.jpg")
+```
+
+The influence diagram is created using HuginLite.
+
+```{r 2c1, message=FALSE,error=FALSE,warning=FALSE,echo=FALSE}
+P1 = 0.40; P2 = 0.60;
+q2cdata <- data.frame(
+   Action = c("70R,30B","70B,30R"),
+   State = c("S1","S2"),
+   Probabilities = c(P1,P2)
+)
+kable(q2cdata, caption = "State of the World)")
+
+q2c1data <- data.frame(
+   Action = c("70R,30B","70B,30R")
+)
+kable(q2c1data, caption = "Action table")
+
+q2c2data <- data.frame(
+   S1 = c(0.605,0.224),
+   S2 = c(0.395,0.776),
+   Probabilities = c("DrawRed","DrawBlue")
+)
+kable(q2c2data, caption = "Probabilities")
+
+kable(q2adata, caption = "Payoff matrix ,(Action X State of the World)")
+
+vsidata <- data.frame(
+   Action = c("DrawRed","DrawBlue"),
+   vsi = c(1.76,0)
+)
+kable(vsidata, caption = "Value of sample information")
+```
+###Q3
+A firm is contemplating the purchase of 500 printer cartridges. One supplier, A, offers
+the cartridges at US$ 15 each, guarantees each cartridge, and will replace all defective
+cartridges free. A second supplier, B, offers the cartridges at US$ 14 each with no
+guarantee. However, supplier B will replace defective cartridges with good cartridges
+for US$ 10 per cartridge. Let the propotion of defective cartridges produced by supplier B
+be $\overline{p}$ and suppose your prior distribution for $\overline{p}$ is a beta distribution
+with parameters a=2 and b=48 i.e the pdf is $p^{2-1}.(1-p)^{48-1}/B(2,48)\\$
+
+###a) What should the firm do on the basis of the prior distribution?
+$\overline{p} \in (0,1)\\$ $\overline{p}\\$ is a beta distribution.
+prior distribution:
+$E(\overline{p}) = \frac{a}{a+b} = \frac{2}{2+48} = \frac{1}{25}\\$
+Expected Payoff:
+$E(A) = (500X-15) = -7500\\$
+$E(B) = (500X-14) -10.\overline{p}.(500) = -7200\\$
+The firm should hence choose supplier B.
+ 
+###b) How much is it worth to the firm to know the proportion of defective cartridges for certain?
+Equating the payoff's we can find the optimal $\overline{p}$ 
+$E(A) = E(B)\\$
+$-7500 = -7000 -10.\overline{p}.(500)\\$
+$\overline{p} = 0.1$
+
+if $\overline{p}$ < 0.1
+Loss(A) = -7000-10$\overline{p}$(500)) - (-7500)
+Loss(B) = 0 
+if $\overline{p}$ > 0.1
+Loss(A) = 0 
+Loss(A) = -7500 -( -7000-10$\overline{p}$(500))
+
+
+Expected Value of perfect information:
+$EVPI = \int{(Loss(a*,y)}.f(y)dy\\$
+$EVPI = \int{(5000\overline{p}-500)}.[\frac{\overline{p}.(1-\overline{p})^{47}}{B(2,48)}]dy\\$
+
+```{r 3b, message=FALSE,error=FALSE,warning=FALSE}
+evpi <- 5000*(1 - pbeta(0.1, 3,48))*(beta(3,48)/beta(2,48)) - 500*(1 - pbeta(0.1, 2,48))
+evpi
+```
+
+###c) Suppose that supplier B ca provide a randomly chosen sample of 10 cartridges. What is the expected value of information of this sample?
+
+```{r 3c, message=FALSE,error=FALSE,warning=FALSE}
+posterior_mean <- c()
+for(i in 0:10){
+  alpha <- 2 + i
+  beta <- 48 + 10 - i
+  posterior_mean <- c(posterior_mean, alpha/(alpha + beta))
+}
+print("posterior mean is")
+posterior_mean
+er_A <- c()
+er_B <- c()
+
+for(A in 1:11){
+  er_A <- c(er_A, -15*500)
+}
+er_B <- -7000 - (10*posterior_mean*500)
+
+vsi3 <- c()
+for(i in 1:11){
+  if(posterior_mean[i] > 0.1){
+    vsi3 <- c(vsi3, er_A[i] - er_B[i])
+  }
+  else
+    vsi3 <- c(vsi3, er_B[i] - er_B[i])
+}
+print("vsi is")
+vsi3  
+y <- c()
+for(i in 0:10){
+  comb <- factorial(10)/(factorial(10 - i) * factorial(i))
+  y <- c(y, comb*beta(2+i, 58-i)/beta(2,48))
+}
+
+evsi3 <- sum(vsi3*y)
+print("evsi is")
+evsi3
+```
+
+Priot optimal action is chosen which is choosing supplier B. Posterior $\overline{p},\alpha,\beta$ are found. $\alpha$ = 2+i, $\beta$ = 48+10+i, where i is the sample of defective cartridges.
+From the output above, it is seen that $\overline{p}$ for i=10 is 0.2.
+Using this, the Value of sample information can be calculated which from the output above is observed to be,
+vsi = 500 for i =10.
+
+$EVSI =  \sum(vsi . P(y))\\$
+
+$P(y) = \int{\frac{\overline{p}(1-\overline{p})^{47}}{B(2,48)}\left(\begin{array}{cc} 10 \\defective\end{array}\right)\overline{p_{def}(1-\overline{p})^{10-defective}}}\\$
+$P(y) = \left(\begin{array}{cc} 10 \\defective\end{array}\right) \frac{B(2+defective,58-defective)}{B(2,48)} \int^1_0{\frac{\overline{p}^{1+defective}(1-\overline{p})^{57-defective}}{B(2+defective,58-defective)}}\\$
+$P(y) = P(y) = \left(\begin{array}{cc} 10 \\defective\end{array}\right) \frac{B(2+defective,58-defective)}{B(2,48)}\\$
+
+$EVSI = 0(6.87X10^-1)+0(2.41X10^-1)+0(5.81X10^-2)+0(1.13X10^-2)+0(1.83)+83.33(2.48X10^-4)+166.67(2.78X10^-5)+250(2.5)+333.33(1.68X10^-7)+416.67(7.64X10^-7)+500(1.75X10^-10)\\ = 0.026\\$
+
+
+###d)In the sample of 10 cartridges, 1 is defective. Find the posterior distribution of $overline{p}$ and use this distribution to determine which supplier the firm should deal with.
+
+```{r 3d, message=FALSE,error=FALSE,warning=FALSE}
+#payoff for the actions
+er_A 
+er_B
+```
+
+$\overline{p} = \frac{2+1}{48+10-1} = \frac{3}{57}$
+The expected payoff's area:
+$ER(A) = -15(500) = -7500$
+$ER(B) = -7000-10(\frac{3}{57})500 = -7250$
+The choice the firm should make is to go with supplier B.
+
+###4. Assume some budget calculations depend on whether a certain cost will be at least SEK 120000 or lower than this amount. A fairly good model for this cost is a normal distribution with standard deviation SEK 12000 and a mean that can be modelled as normally distributed with mean 115000 (SEK) and standard deviation 9000 (SEK). No trend is anticipated for this cost and for the 6 previous periods the average cost was SEK 121000.
+###a. What are the prior odds for the hypothesis that the cost will exceed SEK 120000 against the alternative that it will not?
+
+$Cost \sim N(\mu,12000)$
+$\mu \sim N(115000,9000)$
+
+###a. What are the prior odds for the hypothesis that the cost will exceed SEK 120000 against the alternative that it will not?
+$H_0 = Cost > 120000\\$
+$H_1 = Cost < 120000\\$
+Prior odds:
+$Prior odds = \frac{P(H_0|I)}{P(H_1|I)} = \frac{0.368}{0.631} = 0.584\\$
+
+```{r 4a, message=FALSE,error=FALSE,warning=FALSE}
+theta <- rnorm(500000, 115000, 9000)
+mu <- rnorm(500000, theta, 12000)
+ph0 <- mean(mu > 120000)
+ph1 <- mean(mu <= 120000)
+
+prior_odds <- ph0/ph1
+```
+
+###b. Calculate the Bayes factor in light of the average cost for the previous 6 periods for the hypothesis that the cost will exceed SEK 120 000 against the alternative that it will not.
+$n = 6\\$
+$Bayes Factor = \frac{Odss(H_0|Data,I)}{Odss(H_0|I)}\\=\frac{\frac{P(H_0|Data,I)}{P(H_1|Data,I)}}{\frac{P(H_0|I)}{P(H_1|I)}}$
+posterior distribution:
+$\theta_n \sim N(\mu_n,\tau_n^2)\\$ 
+$x \sim N(\theta_n,\sigma^2)$
+prior distribution:
+$\theta_n \sim N(\mu_0,\tau_0^2) \sim N(115000,9000)$
+
+$\frac{1}{\tau^2} = \frac{n}{\sigma^2}+\frac{1}{\tau_0^2}$
+$\mu_n = w\overline{x}+(1-w)\mu_0,\\where w = \frac{\frac{n}{\sigma^2}}{\frac{n}{\sigma^2}+{\frac{1}{\sigma^2}}}$
+
+$\frac{1}{\tau^2} = \frac{6}{12000^2}+\frac{1}{9000^2}$
+$\tau_n = 4302.823$
+
+$w = \frac{\frac{6}{12000^2}}{\frac{6}{12000^2}+{\frac{1}{9000^2}}} = 0.771$
+
+$\mu_n = 0.771(12100)+(1-0.77)(115000) = 119620$
+
+$\theta_n \sim N(119620,4302.823^2)$
+
+```{r 4b, message=FALSE,error=FALSE,warning=FALSE}
+posterior_theta <- rnorm(500000, 119620, sqrt(18514284))
+posterior_x <- rnorm(500000, posterior_theta, 12000)
+
+post_h0 <- mean(posterior_x > 120000)
+post_h1 <- mean(posterior_x <= 120000)
+print("posterior means")
+post_h0
+post_h1
+post_odds <- post_h0/post_h1
+print("posterior odds")
+post_odds
+bayesfactor <- post_odds/prior_odds
+print("bayes factor")
+bayesfactor
+```
+
+###c. if the loss of accepting the hypothesis that the cost will be lower than SEK 120000 while the opposite will be true is SEK 4 000, and the loss of accepting the hypothesis that the cost will be at least SEK 120000 while the opposite will be true is SEK 6000, which decision should be made for the budget (according to the rule of minimizing the expected loss)?
+
+Expected Loss of the actions:
+$EL(Fail to reject H0) = 0X0.49 + 6000X0.51 = 3068.22$
+$EL(Accept H1) = 4000X0.49 + 0X0.51 = 1954.52$
+Since the expected loss is lower with H1, we go with H1.
+
+```{r 4d, message=FALSE,error=FALSE,warning=FALSE,echo=FALSE}
+lossdata <- data.frame(
+   sl = c("Fail to reject H0","Accept H1"),
+   H0 = c(0,4000),
+   H1 = c(6000,0)   
+)
+kable(lossdata, caption = "Loss function ")
+```
+
